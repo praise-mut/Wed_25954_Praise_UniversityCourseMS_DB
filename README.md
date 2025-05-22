@@ -34,8 +34,8 @@ This system will be used within a university to automate course registration, sc
 - Enrollments
 
 ### 📽️ Presentation
- [Click here to download the PowerPoint](./Wed_25954_praise_plsql.pptx)
- 
+   [Click here to download the PowerPoint](./Wed_25954_praise_plsql.pptx)
+
 ---
 
 ## ✅ Phase II – Business Process Modeling (MIS)
@@ -60,46 +60,47 @@ The process begins with administrators creating course schedules. Students log i
 ## ✅ Phase III – Logical Model Design - University Management System
 
 ### 📘 Overview
-This phase defines the logical data model for the University Management System using only the required **primary entities** for managing students, professors, courses, departments, and enrollments. Supporting entities are omitted unless explicitly required.
+This phase defines the logical data model for the University Management System using the core primary entities based on the finalized ER diagram, which manages students, professors, courses, enrollments, and schedules.
 
 ### 🧱 Entity-Relationship (ER) Diagram
-**SPACE FOR SCREENSHOT** *(ER diagram includes only primary entities)*
+**SPACE FOR SCREENSHOT** *(ER diagram reflects finalized relationships)*
 
 ### 📂 Core Entities
 
-#### Primary Entities Only
-- **Students**: Stores student personal information, department affiliation, and contact details.
-- **Professors**: Contains faculty information, including department and role.
-- **Departments**: Lists academic departments and associated metadata.
-- **Courses**: Describes course offerings, including course name, credits, and assigned professor.
-- **Enrollments**: Tracks which students are enrolled in which courses each semester, along with grades.
+#### Primary Entities
+- **Students**: Contains student ID, name, department, email, and phone.
+- **Professors**: Contains professor ID, name, department, email, and phone.
+- **Courses**: Stores course ID, name, credits, department, and assigned professor ID.
+- **Enrollments**: Join table to link students and courses, with enrollment ID, semester, and grade.
+- **Schedules**: Associates a course with room, day, and timeslot.
 
-### 🔗 Key Relationships
-- **Departments → Students, Professors, Courses** (One-to-Many)
-- **Professors → Courses** (One-to-Many)
-- **Students ↔ Courses** (Many-to-Many via Enrollments)
+### 🔗 Relationships (as per ER diagram)
+- **Students → Enrollments**: One-to-Many (a student can enroll in many courses)
+- **Courses → Enrollments**: One-to-Many (a course can have many enrolled students)
+- **Professors → Courses**: One-to-Many (a professor can teach multiple courses)
+- **Courses → Schedules**: One-to-One or One-to-Many (each course has a scheduled session)
 
 ### 🔐 Data Integrity Features
-- **NOT NULL** constraints on primary keys and required fields
-- **UNIQUE** constraints on email, department name, course codes
-- **CHECK** constraints on grade values (e.g., A–F), course credits
-- **DEFAULT** values for applicable status or timestamp fields
+- **NOT NULL** constraints on all primary keys and essential fields
+- **UNIQUE** constraints on identifiers such as email and course codes
+- **CHECK** constraints (e.g., grade values, course credits, time slot formats)
+- **Foreign Keys** to enforce referential integrity between students, courses, professors, and schedules
 
 ### 🔁 Normalization
-The model follows **Third Normal Form (3NF)**:
-- 1NF: No repeating groups, atomic values
-- 2NF: No partial dependencies
-- 3NF: No transitive dependencies — departments, professors, and courses separated
+The model is normalized to **3NF**:
+- No repeating groups or partial dependencies
+- All non-key attributes depend only on the primary key
+- `Schedules` retains simplified structure (Room, TimeSlot, Day directly included)
 
 ### 💡 Key Design Decisions
-1. **Simplified model** with only essential tables
-2. **Enrollment table** handles many-to-many student-course mapping
-3. **Department reference** in each primary entity avoids redundancy
+1. **Simplified scheduling model**: room/time/day stored within Schedules without separating to avoid over-normalization.
+2. **Join table Enrollments** handles many-to-many relationships between Students and Courses.
+3. **Single professor assignment** per course ensures clear instructional responsibility.
 
 ### 📁 Files Included
-- `university_core_schema.sql` – DDL for Students, Professors, Courses, Departments, Enrollments
-- `core_erd_diagram.png` – ERD with primary entities only
-- `phase3_documentation.md` – This documentation
+- `university_core_schema.sql` – Updated DDL reflecting this structure
+- `finalized_erd_diagram.png` – ERD based on this relationship
+- `phase3_documentation.md` – Updated documentation summary
 
 ---
 
