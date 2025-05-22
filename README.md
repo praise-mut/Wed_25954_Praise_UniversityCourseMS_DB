@@ -57,7 +57,7 @@ This phase models the flow of course registration, grade submission, and schedul
 5. The student views their grades through the system.
 
 ### 📊 Swimlane Diagram
-![Project Diagram](./SwimLanes.png)
+![Swimlane Diagram](./SwimLanes.png)
 
 ### Model the Process
 Steps to include in your diagram:
@@ -98,7 +98,7 @@ This workflow increases efficiency, reduces administrative workload, and ensures
 This phase defines the logical data model for the University Management System using the core primary entities based on the finalized ER diagram, which manages students, professors, courses, enrollments, and schedules.
 
 ### 🧱 Entity-Relationship (ER) Diagram
-**SPACE FOR SCREENSHOT** *(ER diagram reflects finalized relationships)*
+![Project Diagram](./ER_Diagram.png)
 
 ### 📂 Core Entities
 
