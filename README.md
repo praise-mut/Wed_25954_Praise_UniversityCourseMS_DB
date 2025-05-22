@@ -34,7 +34,7 @@ This system will be used within a university to automate course registration, sc
 - Enrollments
 
 ### 📽️ Presentation
-**SPACE FOR SCREENSHOT**
+ [Click here to download the PowerPoint](./Wed_25954_praise_plsql.pptx)
 
 ---
 
