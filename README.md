@@ -132,11 +132,6 @@ The model is normalized to **3NF**:
 2. **Join table Enrollments** handles many-to-many relationships between Students and Courses.
 3. **Single professor assignment** per course ensures clear instructional responsibility.
 
-### 📁 Files Included
-- `university_core_schema.sql` – Updated DDL reflecting this structure
-- `finalized_erd_diagram.png` – ERD based on this relationship
-- `phase3_documentation.md` – Updated documentation summary
-
 ---
 
 ## ✅ Phase IV – Database Creation and Naming
