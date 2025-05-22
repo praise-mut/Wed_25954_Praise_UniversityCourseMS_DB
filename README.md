@@ -40,20 +40,40 @@ This system will be used within a university to automate course registration, sc
 
 ## ✅ Phase II – Business Process Modeling (MIS)
 
-### 🔍 Scope
-This phase models the process of course registration, scheduling, and grade submission, and how users interact with the MIS to manage these workflows.
+### 📘 Overview
+This phase models the flow of course registration, grade submission, and scheduling from the perspective of key actors: students, professors, administrators, and the system (MIS). It shows how the MIS supports and enhances decision-making and operational efficiency.
 
-### 🔑 Key Entities
-- Student
-- Professor
-- Administrator
-- System (MIS database)
+### 🧑‍🏫 Actors / Swimlanes
+- **Student**: Registers for courses and views grades
+- **Professor**: Manages course assignments and enters student grades
+- **Administrator**: Schedules courses and assigns professors
+- **System (MIS)**: Validates and stores all inputs, detects conflicts, and secures access
+
+### 🧭 Process Modeled
+1. Administrator creates the course schedule and assigns professors.
+2. Student browses available courses and registers.
+3. The system checks for conflicts and stores the enrollment.
+4. At the end of the term, the professor submits grades.
+5. The student views their grades through the system.
 
 ### 📊 Swimlane Diagram
-**SPACE FOR SCREENSHOT**
+![Project Diagram](./SwimLanes.png)
 
-### 📄 Explanation
-The process begins with administrators creating course schedules. Students log in, view courses, and register. The system validates inputs and prevents conflicts. Professors then enter grades, which students can view. All activities are securely handled and logged by the system.
+
+### 🔍 Features of the Process Model
+- Prevents scheduling conflicts using MIS logic
+- Applies access control per user role (student/professor/admin)
+- Centralizes grade storage and transcript access
+- Encourages automation and traceability in the academic process
+
+### 🧠 MIS Decision Support
+- MIS checks time slots for overlap
+- Records all actions for accountability
+- Automatically restricts unauthorized actions (e.g., grade editing by students)
+
+### 📁 Files Included
+- `bpmn_process_flow.png` – Business process diagram
+- `phase2_documentation.md` – Text documentation for this phase
 
 ---
 
