@@ -35,7 +35,7 @@ This system will be used within a university to automate course registration, sc
 
 ### 📽️ Presentation
  [Click here to download the PowerPoint](./Wed_25954_praise_plsql.pptx)
-
+ 
 ---
 
 ## ✅ Phase II – Business Process Modeling (MIS)
@@ -60,61 +60,46 @@ The process begins with administrators creating course schedules. Students log i
 ## ✅ Phase III – Logical Model Design - University Management System
 
 ### 📘 Overview
-This phase designs a detailed logical data model for the University Management System, managing students, professors, courses, enrollments, schedules, and academic operations.
+This phase defines the logical data model for the University Management System using only the required **primary entities** for managing students, professors, courses, departments, and enrollments. Supporting entities are omitted unless explicitly required.
 
 ### 🧱 Entity-Relationship (ER) Diagram
-**SPACE FOR SCREENSHOT** *(Insert ER Diagram here)*
+**SPACE FOR SCREENSHOT** *(ER diagram includes only primary entities)*
 
 ### 📂 Core Entities
 
-#### Primary Entities
-- **Students**: Student information, department affiliation, contact details
-- **Professors**: Faculty information, department assignment, position details
-- **Departments**: Academic departments with location and chair assignment
-- **Courses**: Course offerings with credits, codes, and descriptions
-- **Enrollments**: Student-course registrations with grades and status
-
-#### Supporting Entities
-- **Academic_Periods**: Semester and year management
-- **Rooms**: Classroom information with capacity and type
-- **Time_Slots**: Class scheduling time periods
-- **Schedules**: Course-room-time assignments
+#### Primary Entities Only
+- **Students**: Stores student personal information, department affiliation, and contact details.
+- **Professors**: Contains faculty information, including department and role.
+- **Departments**: Lists academic departments and associated metadata.
+- **Courses**: Describes course offerings, including course name, credits, and assigned professor.
+- **Enrollments**: Tracks which students are enrolled in which courses each semester, along with grades.
 
 ### 🔗 Key Relationships
-- **Departments → Students/Professors/Courses** (One-to-Many)
+- **Departments → Students, Professors, Courses** (One-to-Many)
 - **Professors → Courses** (One-to-Many)
 - **Students ↔ Courses** (Many-to-Many via Enrollments)
-- **Courses → Schedules** (One-to-Many)
 
 ### 🔐 Data Integrity Features
+- **NOT NULL** constraints on primary keys and required fields
+- **UNIQUE** constraints on email, department name, course codes
+- **CHECK** constraints on grade values (e.g., A–F), course credits
+- **DEFAULT** values for applicable status or timestamp fields
 
-#### Constraints Applied
-- **NOT NULL**: All primary keys and essential attributes
-- **UNIQUE**: Email addresses, course codes, department names
-- **CHECK**: Email format, grade values (A+ to F), credits (1–6), room capacity > 0
-- **DEFAULT**: Current dates, active status values
+### 🔁 Normalization
+The model follows **Third Normal Form (3NF)**:
+- 1NF: No repeating groups, atomic values
+- 2NF: No partial dependencies
+- 3NF: No transitive dependencies — departments, professors, and courses separated
 
-#### 🔁 Normalization
-Designed to **Third Normal Form (3NF)**:
-- **1NF**: Atomic values, no repeating groups
-- **2NF**: No partial dependencies
-- **3NF**: No transitive dependencies, separate reference tables
-
-### 🧠 Key Design Decisions
-1. **Department Normalization**: Separate table eliminates redundancy
-2. **Academic Period Management**: Flexible semester/year structure
-3. **Schedule Optimization**: Separate rooms and time slots for conflict prevention
-4. **Composite Constraints**: Prevent double-booking and duplicate enrollments
+### 💡 Key Design Decisions
+1. **Simplified model** with only essential tables
+2. **Enrollment table** handles many-to-many student-course mapping
+3. **Department reference** in each primary entity avoids redundancy
 
 ### 📁 Files Included
-- `university_database_schema.sql` – Complete DDL scripts
-- `erd_diagram.png` – Entity-Relationship Diagram
+- `university_core_schema.sql` – DDL for Students, Professors, Courses, Departments, Enrollments
+- `core_erd_diagram.png` – ERD with primary entities only
 - `phase3_documentation.md` – This documentation
-
-### 🚀 Future Readiness
-- Prepared for Phase 7 holiday restrictions
-- Audit logging capabilities
-- Scalable design with proper indexing
 
 ---
 
@@ -165,28 +150,36 @@ Designed to **Third Normal Form (3NF)**:
 ## ✅ Phase VI – Database Interaction and Transactions
 
 ### 🔄 Operations Performed
-- **DML**: Insert, Update, Delete for Students, Courses, Enrollments
-- **DDL**: Create tables, procedures, functions, packages
+Implemented DDL and DML operations for managing students, courses, enrollments, schedules, and professors.
+
+- **DML**: `INSERT`, `UPDATE`, `DELETE` for Students, Courses, Enrollments
+- **DDL**: Created PL/SQL procedures, functions, cursors, and packages
 
 ### 🧩 Procedures & Functions
-- `proc_register_student`: Registers students and handles duplicates
-- `fn_get_student_gpa`: Returns a student’s average grade
+- `proc_register_student`: A parameterized procedure to register a student for a course
+- `fn_get_student_gpa`: A function that returns the GPA of a student based on all grades
 
 ### 🔁 Cursor Example
-- Lists course enrollments for a given student
+- Used cursor to loop through a student’s enrollments and display course IDs and grades
 
-### 📦 Package
-- `student_pkg` created to wrap and organize procedures/functions
+### 🧪 Exception Handling
+- Implemented in procedures/functions to handle duplicate entries and missing data gracefully using `EXCEPTION WHEN ...`
 
-### 🧪 Testing
-- All procedures tested using `DBMS_OUTPUT`
+### 📦 Package Implementation
+- `student_pkg` package created to encapsulate:
+  - `proc_register_student`
+  - `fn_get_student_gpa`
+
+### 🧪 Testing Summary
+- Procedures and functions tested using anonymous PL/SQL blocks and `DBMS_OUTPUT`
+- Cursor loops and error-handling behaviors verified for different test scenarios
 
 ### 📸 Screenshots
-- Procedure creation – **SPACE FOR SCREENSHOT**
-- Function creation – **SPACE FOR SCREENSHOT**
-- Cursor execution – **SPACE FOR SCREENSHOT**
-- Package body – **SPACE FOR SCREENSHOT**
-- Output testing – **SPACE FOR SCREENSHOT**
+- Procedure creation and compilation – **SPACE FOR SCREENSHOT**
+- Function implementation and output – **SPACE FOR SCREENSHOT**
+- Cursor loop output in `DBMS_OUTPUT` – **SPACE FOR SCREENSHOT**
+- Package body and execution – **SPACE FOR SCREENSHOT**
+- Overall interaction result – **SPACE FOR SCREENSHOT**
 
 ---
 
