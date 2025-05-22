@@ -59,7 +59,25 @@ This phase models the flow of course registration, grade submission, and schedul
 ### 📊 Swimlane Diagram
 ![Project Diagram](./SwimLanes.png)
 
+### Model the Process
+Steps to include in your diagram:
+- Admin logs in and creates course schedule.
+- Instructor is assigned to course.
+- Student browses available courses.
+- Student registers for selected courses.
+- Instructor enters grades after course completion.
+- Student views grades.
+- MIS stores and updates data.
 
+### Explanation of Business Process Model – University Course Management System
+
+The modeled process demonstrates how students, professors, and administrators interact with a centralized MIS to manage academic operations. Students log in, view available courses, and register. The system checks for schedule conflicts before enrollment. Professors access assigned courses and submit student grades after course completion. The administrator manages course offerings and schedules, ensuring every course has an assigned professor and an available time slot.
+
+The system enforces data integrity and access control. Students can only view their records, professors update only their assigned course grades, and admins handle course logistics. The MIS automates conflict detection and reduces errors, supporting fast, reliable decision-making.
+
+This workflow increases efficiency, reduces administrative workload, and ensures accurate academic records. It directly supports MIS goals by streamlining operations, centralizing data, and improving data-driven decision-making.
+
+  
 ### 🔍 Features of the Process Model
 - Prevents scheduling conflicts using MIS logic
 - Applies access control per user role (student/professor/admin)
@@ -71,9 +89,6 @@ This phase models the flow of course registration, grade submission, and schedul
 - Records all actions for accountability
 - Automatically restricts unauthorized actions (e.g., grade editing by students)
 
-### 📁 Files Included
-- `bpmn_process_flow.png` – Business process diagram
-- `phase2_documentation.md` – Text documentation for this phase
 
 ---
 
