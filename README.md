@@ -137,8 +137,9 @@ The model is normalized to **3NF**:
 ## ✅ Phase IV – Database Creation and Naming
 
 ### 📛 Database Name
-- **Database/User Name:** Wed_25954_Praise_CourseMgmt_DB
+- **Database/User Name:** WED_25954_PRAISE_UNIVERSITY_DB
 - **Password:** Praise
+  ![PDB Diagram](./pdb.png)
 
 ### 🔑 Privileges
 - Granted **DBA** role to user
