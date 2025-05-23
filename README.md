@@ -227,36 +227,86 @@ Implemented DDL and DML operations for managing students, courses, enrollments, 
 - Overall interaction result – **SPACE FOR SCREENSHOT**
 
 ---
-
 ## ✅ Phase VII – Advanced Database Programming and Auditing
 
 ### 🔒 Access Restrictions
-- Created `Holiday_Dates` table to store public holidays
-- Inserted sample upcoming holiday records (June 2025)
+Created mechanisms to prevent unauthorized DML (INSERT, UPDATE, DELETE) operations during weekdays and public holidays, and to monitor user actions.
 
-### ⚠️ Trigger to Block DML Operations
-- Trigger blocks `INSERT`, `UPDATE`, `DELETE` on `Enrollments` during:
-  - Weekdays (Mon–Fri)
-  - Public holidays (from `Holiday_Dates`)
+### 📅 Holiday_Dates Table
+```sql
+CREATE TABLE Holiday_Dates (
+    holiday_date DATE PRIMARY KEY,
+    description VARCHAR2(100)
+);
+```
+Stores official public holidays. Used to restrict changes on those days.
 
-### 🛡️ Auditing Trigger
-- Trigger logs actions in `Audit_Log` table
-- Logs user, action type, table name, time, and status
+### 📋 Audit_Log Table
+```sql
+CREATE TABLE Audit_Log (
+    log_id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    user_id VARCHAR2(100),
+    action_type VARCHAR2(10),
+    table_name VARCHAR2(30),
+    action_time TIMESTAMP DEFAULT SYSTIMESTAMP,
+    status VARCHAR2(20)
+);
+```
+Captures user actions on the `Enrollments` table including action type, timestamp, and status.
 
-### 📋 Audit Table
-- `Audit_Log`: Stores details of every change (Insert/Update/Delete)
+### ⚠️ Trigger: Block Changes on Weekdays or Holidays
+```sql
+CREATE OR REPLACE TRIGGER trg_block_changes
+BEFORE INSERT OR UPDATE OR DELETE ON Enrollments
+FOR EACH ROW
+DECLARE
+    v_day VARCHAR2(10);
+    v_today DATE := TRUNC(SYSDATE);
+    v_is_holiday NUMBER;
+BEGIN
+    v_day := TO_CHAR(v_today, 'DY', 'NLS_DATE_LANGUAGE = ENGLISH');
+    SELECT COUNT(*) INTO v_is_holiday FROM Holiday_Dates WHERE holiday_date = v_today;
+
+    IF v_day IN ('MON','TUE','WED','THU','FRI') OR v_is_holiday > 0 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Changes are not allowed during weekdays or public holidays.');
+    END IF;
+END;
+/
+```
+
+### 🛡️ Trigger: Auditing Enrollments
+```sql
+CREATE OR REPLACE TRIGGER trg_audit_enrollments
+AFTER INSERT OR UPDATE OR DELETE ON Enrollments
+FOR EACH ROW
+DECLARE
+    v_action VARCHAR2(10);
+BEGIN
+    IF INSERTING THEN v_action := 'INSERT';
+    ELSIF UPDATING THEN v_action := 'UPDATE';
+    ELSIF DELETING THEN v_action := 'DELETE';
+    END IF;
+
+    INSERT INTO Audit_Log (user_id, action_type, table_name, status)
+    VALUES (USER, v_action, 'Enrollments', 'ALLOWED');
+END;
+/
+```
 
 ### 🧪 Testing
-- Attempted changes during restricted days → error raised
-- Successful changes logged on weekend → recorded in `Audit_Log`
+- Inserted holidays into `Holiday_Dates`
+- Attempted DML actions on weekdays/holidays (triggered restriction)
+- Successfully ran DML actions on weekend
+- Verified actions logged in `Audit_Log`
 
 ### 📸 Screenshots
-- Holiday_Dates and Audit_Log table creation – **SPACE FOR SCREENSHOT**
-- Blocking trigger creation – **SPACE FOR SCREENSHOT**
-- Auditing trigger creation – **SPACE FOR SCREENSHOT**
-- Attempt to change data during restricted time (error) – **SPACE FOR SCREENSHOT**
-- Successful data change and audit log – **SPACE FOR SCREENSHOT**
-- Querying Audit_Log – **SPACE FOR SCREENSHOT**
+- `Holiday_Dates` and `Audit_Log` table creation – **SPACE FOR SCREENSHOT**
+- `trg_block_changes` creation – **SPACE FOR SCREENSHOT**
+- `trg_audit_enrollments` creation – **SPACE FOR SCREENSHOT**
+- Error shown on restricted day – **SPACE FOR SCREENSHOT**
+- Log entry after successful change – **SPACE FOR SCREENSHOT**
+- Query output from `Audit_Log` – **SPACE FOR SCREENSHOT**
+
 
 ---
 
