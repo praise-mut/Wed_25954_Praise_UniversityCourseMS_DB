@@ -300,9 +300,16 @@ END;
 - Verified actions logged in `Audit_Log`
 
 ### 📸 Screenshots
-- `Holiday_Dates` and `Audit_Log` table creation – **SPACE FOR SCREENSHOT**
-- `trg_block_changes` creation – **SPACE FOR SCREENSHOT**
-- `trg_audit_enrollments` creation – **SPACE FOR SCREENSHOT**
+- `Holiday_Dates` and `Audit_Log` table creation
+
+![Diagram](./holidays.png)
+
+![Diagram](./audit_log.png)
+- `trg_block_changes` creation –
+![Diagram](./trg_block.png)
+
+- `trg_audit_enrollments` creation –
+![Diagram](./trg_audit.png)
 - Error shown on restricted day – **SPACE FOR SCREENSHOT**
 - Log entry after successful change – **SPACE FOR SCREENSHOT**
 - Query output from `Audit_Log` – **SPACE FOR SCREENSHOT**
