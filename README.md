@@ -137,12 +137,15 @@ The model is normalized to **3NF**:
 ## ✅ Phase IV – Database Creation and Naming
 
 ### 📛 Database Name
-- **Database/User Name:** WED_25954_PRAISE_UNIVERSITY_DB
+- **Database:** WED_25954_PRAISE_UNIVERSITY_DB
 - **Password:** Praise
+  
   ![PDB Diagram](./pdb.png)
 
 ### 🔑 Privileges
 - Granted **DBA** role to user
+
+![DBA Diagram](./dba.png)
 
 ### 🖥️ OEM Access
 - OEM accessed at `https://localhost:5500/`
