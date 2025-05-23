@@ -210,8 +210,18 @@ Implemented DDL and DML operations for managing students, courses, enrollments, 
 - Cursor loops and error-handling behaviors verified for different test scenarios
 
 ### 📸 Screenshots
-- Procedure creation and compilation – **SPACE FOR SCREENSHOT**
-- Function implementation and output – **SPACE FOR SCREENSHOT**
+- Procedure creation and compilation –
+  
+![Procedure Diagram](./proc_compiled.png)
+
+![Procedure Diagram](./proc_completed.png)
+
+- Function implementation and output –
+  
+![Function Diagram](./fn_compiled.png)
+
+![Function Diagram](./fn_completed.png)
+
 - Cursor loop output in `DBMS_OUTPUT` – **SPACE FOR SCREENSHOT**
 - Package body and execution – **SPACE FOR SCREENSHOT**
 - Overall interaction result – **SPACE FOR SCREENSHOT**
