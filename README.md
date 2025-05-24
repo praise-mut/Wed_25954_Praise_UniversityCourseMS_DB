@@ -162,8 +162,6 @@ The model is normalized to **3NF**:
 
 ## ✅ Phase V – Table Implementation and Data Insertion
 
-## ✅ Phase V – Table Implementation and Data Insertion
-
 ### 🧱 Table Implementation
 Below are the SQL scripts used to create the core tables for the University Course Management System:
 
@@ -449,10 +447,13 @@ END student_pkg;
   
 ![Function Diagram](./fn_compiled1.png)
 
-![Function Diagram](./fn_completed.png)
+![Function Diagram](./fn_completed1.png)
 
 - Cursor loop output in `DBMS_OUTPUT` – **SPACE FOR SCREENSHOT**
-- Package body and execution – **SPACE FOR SCREENSHOT**
+- Package body and execution –
+
+![Package Diagram](./pkg.png)
+
 - Overall interaction result – **SPACE FOR SCREENSHOT**
 
 ---
