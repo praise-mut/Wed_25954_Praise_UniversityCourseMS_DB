@@ -581,7 +581,7 @@ SELECT * FROM Audit_Log ORDER BY action_time DESC;
 
 ## 🔜 Next: Phase VIII – Documentation and Presentation
 
-[Click here to download the PowerPoint](./University-Course-Management-System.pptx)
+[Click here to download the PowerPoint](./pptx/University-Course-Management-System.pptx)
 
 ---
 
