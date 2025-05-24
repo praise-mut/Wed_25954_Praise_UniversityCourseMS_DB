@@ -447,7 +447,7 @@ END student_pkg;
   
 ![Function Diagram](./Screenshots/fn_compiled1.png)
 
-![Function Diagram](./Screenshots/fn_completed1.png)
+![Function Diagram](./Screenshots/fn_competed1.png)
 
 - Cursor loop output in `DBMS_OUTPUT` – **SPACE FOR SCREENSHOT**
 - Package body and execution –
