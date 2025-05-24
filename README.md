@@ -162,12 +162,114 @@ The model is normalized to **3NF**:
 
 ## ✅ Phase V – Table Implementation and Data Insertion
 
+## ✅ Phase V – Table Implementation and Data Insertion
+
 ### 🧱 Table Implementation
-- Created tables: Students, Professors, Courses, Enrollments, Schedules
-- Primary and foreign keys correctly defined
-- Data types and integrity constraints enforced
+Below are the SQL scripts used to create the core tables for the University Course Management System:
+
+```sql
+-- Create Students table
+CREATE TABLE Students (
+    Student_ID INT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Department VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) NOT NULL UNIQUE,
+    Phone VARCHAR(20) NOT NULL,
+    CONSTRAINT valid_student_email CHECK (Email LIKE '%_@_%._%')
+);
+
+-- Create Professors table
+CREATE TABLE Professors (
+    Professor_ID INT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Department VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) NOT NULL UNIQUE,
+    Phone VARCHAR(20) NOT NULL,
+    CONSTRAINT valid_professor_email CHECK (Email LIKE '%_@_%._%')
+);
+
+-- Create Courses table
+CREATE TABLE Courses (
+    Course_ID INT PRIMARY KEY,
+    Professor_ID INT NOT NULL,
+    Name VARCHAR(100) NOT NULL,
+    Credits INT NOT NULL,
+    Department VARCHAR(50) NOT NULL,
+    CONSTRAINT valid_credits CHECK (Credits BETWEEN 1 AND 6),
+    FOREIGN KEY (Professor_ID) REFERENCES Professors(Professor_ID)
+);
+
+-- Create Enrollments table
+CREATE TABLE Enrollments (
+    Enrollment_ID INT PRIMARY KEY,
+    Student_ID INT NOT NULL,
+    Course_ID INT NOT NULL,
+    Semester VARCHAR(20) NOT NULL,
+    Grade VARCHAR(2) DEFAULT NULL,
+    CONSTRAINT valid_grade CHECK (Grade IN ('A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'F', NULL)),
+    CONSTRAINT unique_enrollment UNIQUE (Student_ID, Course_ID, Semester),
+    FOREIGN KEY (Student_ID) REFERENCES Students(Student_ID),
+    FOREIGN KEY (Course_ID) REFERENCES Courses(Course_ID)
+);
+
+-- Create Schedules table
+CREATE TABLE Schedules (
+    Schedule_ID INT PRIMARY KEY,
+    Course_ID INT NOT NULL,
+    Room_Number VARCHAR(20) NOT NULL,
+    Time_Slot VARCHAR(30) NOT NULL,
+    Day VARCHAR(10) NOT NULL,
+    CONSTRAINT valid_day CHECK (Day IN ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')),
+    CONSTRAINT unique_room_time_day UNIQUE (Room_Number, Time_Slot, Day),
+    FOREIGN KEY (Course_ID) REFERENCES Courses(Course_ID)
+);
+```
 
 ### 📥 Sample Data Inserted
+```sql
+--INSERTING INTO STUDENTS TABLE
+INSERT INTO Students (Student_ID, Name, Department, Email, Phone) VALUES
+(1, 'Alice Johnson', 'Computer Science', 'alice.johnson@example.edu', '123-456-7890');
+INSERT INTO Students (Student_ID, Name, Department, Email, Phone) VALUES
+(2, 'Bob Smith', 'Information Systems', 'bob.smith@example.edu', '234-567-8901');
+INSERT INTO Students (Student_ID, Name, Department, Email, Phone) VALUES
+(3, 'Catherine Lee', 'Computer Science', 'catherine.lee@example.edu', '345-678-9012');
+
+--INSERTING INTO PROFESSORS TABLE
+INSERT INTO Professors (Professor_ID, Name, Department, Email, Phone) VALUES
+(101, 'Dr. Emily Davis', 'Computer Science', 'emily.davis@university.edu', '456-789-0123');
+INSERT INTO Professors (Professor_ID, Name, Department, Email, Phone) VALUES
+(102, 'Dr. John Miller', 'Information Systems', 'john.miller@university.edu', '567-890-1234');
+
+--INSERTING INTO COURSES TABLE
+INSERT INTO Courses (Course_ID, Professor_ID, Name, Credits, Department) VALUES
+(1001, 101, 'Database Systems', 3, 'Computer Science');
+INSERT INTO Courses (Course_ID, Professor_ID, Name, Credits, Department) VALUES
+(1002, 101, 'Data Structures', 4, 'Computer Science');
+INSERT INTO Courses (Course_ID, Professor_ID, Name, Credits, Department) VALUES
+(1003, 102, 'E-commerce Systems', 3, 'Information Systems');
+
+--INSERTING INTO ENROLLMENTS TABLE
+INSERT INTO Enrollments (Enrollment_ID, Student_ID, Course_ID, Semester, Grade) VALUES
+(1, 1, 1001, 'Fall 2024', 'A');
+INSERT INTO Enrollments (Enrollment_ID, Student_ID, Course_ID, Semester, Grade) VALUES
+(2, 1, 1002, 'Fall 2024', 'B+');
+INSERT INTO Enrollments (Enrollment_ID, Student_ID, Course_ID, Semester, Grade) VALUES
+(3, 2, 1003, 'Fall 2024', 'A-');
+INSERT INTO Enrollments (Enrollment_ID, Student_ID, Course_ID, Semester, Grade) VALUES
+(4, 3, 1001, 'Fall 2024', 'B');
+INSERT INTO Enrollments (Enrollment_ID, Student_ID, Course_ID, Semester, Grade) VALUES
+(5, 3, 1003, 'Fall 2024', 'A');
+
+--INSERTING INTO SCHEDULES TABLE
+INSERT INTO Schedules (Schedule_ID, Course_ID, Room_Number, Time_Slot, Day) VALUES
+(201, 1001, 'Room A101', '08:00-09:30', 'Monday');
+INSERT INTO Schedules (Schedule_ID, Course_ID, Room_Number, Time_Slot, Day) VALUES
+(202, 1002, 'Room A102', '10:00-11:30', 'Wednesday');
+INSERT INTO Schedules (Schedule_ID, Course_ID, Room_Number, Time_Slot, Day) VALUES
+(203, 1003, 'Room B201', '13:00-14:30', 'Tuesday');
+```
+
 - Realistic records inserted into each table (3–5 entries per table)
 - Test data supports queries and use cases
 
@@ -191,23 +293,150 @@ Implemented DDL and DML operations for managing students, courses, enrollments, 
 - **DDL**: Created PL/SQL procedures, functions, cursors, and packages
 
 ### 🧩 Procedures & Functions
-- `proc_register_student`: A parameterized procedure to register a student for a course
-- `fn_get_student_gpa`: A function that returns the GPA of a student based on all grades
+
+#### ➤ Procedure: Register Student
+```sql
+CREATE OR REPLACE PROCEDURE proc_register_student (
+    p_enrollment_id IN NUMBER,
+    p_student_id IN NUMBER,
+    p_course_id IN NUMBER,
+    p_semester IN VARCHAR2,
+    p_grade IN VARCHAR2
+) AS
+BEGIN
+    INSERT INTO enrollments (enrollment_id, student_id, course_id, semester, grade)
+    VALUES (p_enrollment_id, p_student_id, p_course_id, p_semester, p_grade);
+EXCEPTION
+    WHEN DUP_VAL_ON_INDEX THEN
+        DBMS_OUTPUT.PUT_LINE('Student is already enrolled in this course.');
+END;
+```
+
+#### ➤ Function: Get Student GPA
+```sql
+CREATE OR REPLACE FUNCTION fn_get_student_gpa (
+    p_student_id IN NUMBER
+) RETURN NUMBER IS
+    v_gpa NUMBER;
+BEGIN
+    SELECT AVG(
+        CASE grade
+            WHEN 'A' THEN 4.0
+            WHEN 'A-' THEN 3.7
+            WHEN 'B+' THEN 3.5
+            WHEN 'B' THEN 3.0
+            WHEN 'B-' THEN 2.7
+            WHEN 'C+' THEN 2.5
+            WHEN 'C' THEN 2.0
+            WHEN 'D' THEN 1.0
+            WHEN 'F' THEN 0.0
+            ELSE NULL
+        END
+    )
+    INTO v_gpa
+    FROM enrollments
+    WHERE student_id = p_student_id;
+
+    RETURN v_gpa;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RETURN NULL;
+END;
+```
 
 ### 🔁 Cursor Example
-- Used cursor to loop through a student’s enrollments and display course IDs and grades
+```sql
+DECLARE
+    CURSOR c_enrollments IS
+        SELECT course_id, semester, grade
+        FROM enrollments
+        WHERE student_id = 3;
 
-### 🧪 Exception Handling
-- Implemented in procedures/functions to handle duplicate entries and missing data gracefully using `EXCEPTION WHEN ...`
+    v_course_id  enrollments.course_id%TYPE;
+    v_semester   enrollments.semester%TYPE;
+    v_grade      enrollments.grade%TYPE;
+BEGIN
+    OPEN c_enrollments;
+    LOOP
+        FETCH c_enrollments INTO v_course_id, v_semester, v_grade;
+        EXIT WHEN c_enrollments%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('Course ID: ' || v_course_id || ', Semester: ' || v_semester || ', Grade: ' || v_grade);
+    END LOOP;
+    CLOSE c_enrollments;
+END;
+/
+```
 
-### 📦 Package Implementation
-- `student_pkg` package created to encapsulate:
-  - `proc_register_student`
-  - `fn_get_student_gpa`
+### 📦 Package Definition and Body
+```sql
+CREATE OR REPLACE PACKAGE student_pkg AS
+    PROCEDURE proc_register_student (
+        p_enrollment_id IN NUMBER,
+        p_student_id IN NUMBER,
+        p_course_id IN NUMBER,
+        p_semester IN VARCHAR2,
+        p_grade IN VARCHAR2
+    );
+    FUNCTION fn_get_student_gpa (
+        p_student_id IN NUMBER
+    ) RETURN NUMBER;
+END student_pkg;
+/
+
+CREATE OR REPLACE PACKAGE BODY student_pkg AS
+
+    PROCEDURE proc_register_student (
+        p_enrollment_id IN NUMBER,
+        p_student_id IN NUMBER,
+        p_course_id IN NUMBER,
+        p_semester IN VARCHAR2,
+        p_grade IN VARCHAR2
+    ) IS
+    BEGIN
+        INSERT INTO enrollments (enrollment_id, student_id, course_id, semester, grade)
+        VALUES (p_enrollment_id, p_student_id, p_course_id, p_semester, p_grade);
+    EXCEPTION
+        WHEN DUP_VAL_ON_INDEX THEN
+            DBMS_OUTPUT.PUT_LINE('Student is already enrolled in this course.');
+    END;
+
+    FUNCTION fn_get_student_gpa (
+        p_student_id IN NUMBER
+    ) RETURN NUMBER IS
+        v_gpa NUMBER;
+    BEGIN
+        SELECT AVG(
+            CASE grade
+                WHEN 'A' THEN 4.0
+                WHEN 'A-' THEN 3.7
+                WHEN 'B+' THEN 3.5
+                WHEN 'B' THEN 3.0
+                WHEN 'B-' THEN 2.7
+                WHEN 'C+' THEN 2.5
+                WHEN 'C' THEN 2.0
+                WHEN 'D' THEN 1.0
+                WHEN 'F' THEN 0.0
+                ELSE NULL
+            END
+        )
+        INTO v_gpa
+        FROM enrollments
+        WHERE student_id = p_student_id;
+
+        RETURN v_gpa;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RETURN NULL;
+    END;
+
+END student_pkg;
+/
+```
 
 ### 🧪 Testing Summary
 - Procedures and functions tested using anonymous PL/SQL blocks and `DBMS_OUTPUT`
-- Cursor loops and error-handling behaviors verified for different test scenarios
+- Cursor loops verified for student course listings
+- Function tested for GPA calculation
 
 ### 📸 Screenshots
 - Procedure creation and compilation –
@@ -218,7 +447,7 @@ Implemented DDL and DML operations for managing students, courses, enrollments, 
 
 - Function implementation and output –
   
-![Function Diagram](./fn_compiled.png)
+![Function Diagram](./fn_compiled1.png)
 
 ![Function Diagram](./fn_completed.png)
 
