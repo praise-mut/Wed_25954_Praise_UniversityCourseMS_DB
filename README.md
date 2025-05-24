@@ -449,12 +449,14 @@ END student_pkg;
 
 ![Function Diagram](./Screenshots/fn_competed1.png)
 
-- Cursor loop output in `DBMS_OUTPUT` – **SPACE FOR SCREENSHOT**
+- Cursor loop output in `DBMS_OUTPUT` –
+
+![Cursor Diagram](./Screenshots/cursors.png)
+  
 - Package body and execution –
 
 ![Package Diagram](./Screenshots/pkg.png)
 
-- Overall interaction result – **SPACE FOR SCREENSHOT**
 
 ---
 ## ✅ Phase VII – Advanced Database Programming and Auditing
@@ -532,14 +534,14 @@ END;
 ### 📸 Screenshots
 - `Holiday_Dates` and `Audit_Log` table creation
 
-![Diagram](./holidays.png)
+![Diagram](./Screenshots/holidays.png)
 
-![Diagram](./audit_log.png)
+![Diagram](./Screenshots/audit_log.png)
 - `trg_block_changes` creation –
-![Diagram](./trg_block.png)
+![Diagram](./Screenshots/trg_block.png)
 
 - `trg_audit_enrollments` creation –
-![Diagram](./trg_audit.png)
+![Diagram](./Screenshots/trg_audit.png)
 - Error shown on restricted day – **SPACE FOR SCREENSHOT**
 - Log entry after successful change – **SPACE FOR SCREENSHOT**
 - Query output from `Audit_Log` – **SPACE FOR SCREENSHOT**
