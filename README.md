@@ -549,10 +549,33 @@ END;
 
 - `trg_audit_enrollments` creation –
 ![Diagram](./Screenshots/trg_audit.png)
-- Error shown on restricted day – **SPACE FOR SCREENSHOT**
-- Log entry after successful change – **SPACE FOR SCREENSHOT**
-- Query output from `Audit_Log` – **SPACE FOR SCREENSHOT**
 
+- Error shown on restricted day 
+```sql
+-- Try inserting on a restricted weekday or holiday
+declare
+begin
+    INSERT INTO Enrollments (Enrollment_ID, Student_ID, Course_ID, Semester, Grade)
+    VALUES (6, 3, 1002, 'Spring 2025', 'A');
+end;
+/
+-- Expected Error:
+-- ORA-20001: Changes are not allowed during weekdays or public holidays.
+```
+
+- Log entry after successful change
+```sql
+-- Insert on a weekend to pass the restriction
+INSERT INTO Enrollments (Enrollment_ID, Student_ID, Course_ID, Semester, Grade)
+VALUES (7, 2, 1001, 'Spring 2025', 'B');
+-- This should be allowed and trigger an audit log insert
+```
+
+- Query output from `Audit_Log` 
+```sql
+SELECT * FROM Audit_Log ORDER BY action_time DESC;
+```
+![Diagram](./Screenshots/audit.png)
 
 ---
 
