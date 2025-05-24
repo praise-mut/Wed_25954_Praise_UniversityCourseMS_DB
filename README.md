@@ -152,7 +152,9 @@ The model is normalized to **3NF**:
 - SSL bypass used to open OEM successfully
 
 ### 📸 Screenshots
-- OEM login page – **SPACE FOR SCREENSHOT**
+- OEM login page
+
+![OEM Diagram](./Screenshots/oem_login.png)
 - Database dashboard – **SPACE FOR SCREENSHOT**
 - Schema and tables visible – **SPACE FOR SCREENSHOT**
 - Users and roles – **SPACE FOR SCREENSHOT**
