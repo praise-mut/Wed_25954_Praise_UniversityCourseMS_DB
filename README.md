@@ -57,7 +57,7 @@ This phase models the flow of course registration, grade submission, and schedul
 5. The student views their grades through the system.
 
 ### 📊 Swimlane Diagram
-![Swimlane Diagram](./SwimLanes.png)
+![Swimlane Diagram](./Screenshots/SwimLanes.png)
 
 ### Model the Process
 Steps to include in your diagram:
@@ -98,7 +98,7 @@ This workflow increases efficiency, reduces administrative workload, and ensures
 This phase defines the logical data model for the University Management System using the core primary entities based on the finalized ER diagram, which manages students, professors, courses, enrollments, and schedules.
 
 ### 🧱 Entity-Relationship (ER) Diagram
-![Project Diagram](./ER_Diagram.png)
+![Project Diagram](./Screenshots/ER_Diagram.png)
 
 ### 📂 Core Entities
 
@@ -140,12 +140,12 @@ The model is normalized to **3NF**:
 - **Database:** WED_25954_PRAISE_UNIVERSITY_DB
 - **Password:** Praise
   
-  ![PDB Diagram](./pdb.png)
+  ![PDB Diagram](./Screenshots/pdb.png)
 
 ### 🔑 Privileges
 - Granted **DBA** role to user
 
-![DBA Diagram](./dba.png)
+![DBA Diagram](./Screenshots/dba.png)
 
 ### 🖥️ OEM Access
 - OEM accessed at `https://localhost:5500/`
@@ -439,20 +439,20 @@ END student_pkg;
 ### 📸 Screenshots
 - Procedure creation and compilation –
   
-![Procedure Diagram](./proc_compiled.png)
+![Procedure Diagram](./Screenshots/proc_compiled.png)
 
-![Procedure Diagram](./proc_completed.png)
+![Procedure Diagram](./Screenshots/proc_completed.png)
 
 - Function implementation and output –
   
-![Function Diagram](./fn_compiled1.png)
+![Function Diagram](./Screenshots/fn_compiled1.png)
 
-![Function Diagram](./fn_completed1.png)
+![Function Diagram](./Screenshots/fn_completed1.png)
 
 - Cursor loop output in `DBMS_OUTPUT` – **SPACE FOR SCREENSHOT**
 - Package body and execution –
 
-![Package Diagram](./pkg.png)
+![Package Diagram](./Screenshots/pkg.png)
 
 - Overall interaction result – **SPACE FOR SCREENSHOT**
 
