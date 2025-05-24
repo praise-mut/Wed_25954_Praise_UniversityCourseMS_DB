@@ -122,10 +122,34 @@ This phase defines the logical data model for the University Management System u
 - **Foreign Keys** to enforce referential integrity between students, courses, professors, and schedules
 
 ### 🔁 Normalization
-The model is normalized to **3NF**:
-- No repeating groups or partial dependencies
-- All non-key attributes depend only on the primary key
-- `Schedules` retains simplified structure (Room, TimeSlot, Day directly included)
+To ensure data consistency, eliminate redundancy, and improve database performance, the University Course Management System was normalized up to Third Normal Form (3NF).
+
+#### 1st Normal Form (1NF)
+Each column contains atomic (indivisible) values
+
+No repeating groups or arrays
+
+🧠 Example:
+The Students table stores one phone number per student, not multiple numbers in a single column.
+
+#### 2nd Normal Form (2NF)
+Meets all the requirements of 1NF
+
+Every non-primary-key column is fully dependent on the entire primary key
+
+🧠 Example:
+In the Enrollments table, fields like Semester and Grade depend on the full primary key Enrollment_ID, not just Student_ID.
+
+#### 3rd Normal Form (3NF)
+Meets all the requirements of 2NF
+
+No transitive dependencies (non-key attributes depend only on the primary key)
+
+🧠 Example:
+Department names appear in Students, Professors, and Courses as foreign keys.
+Each department's data is managed separately in a Departments table to eliminate redundancy.
+
+
 
 ### 💡 Key Design Decisions
 1. **Simplified scheduling model**: room/time/day stored within Schedules without separating to avoid over-normalization.
@@ -150,15 +174,6 @@ The model is normalized to **3NF**:
 ### 🖥️ OEM Access
 - OEM accessed at `https://localhost:5500/`
 - SSL bypass used to open OEM successfully
-
-### 📸 Screenshots
-- OEM login page
-
-![OEM Diagram](./Screenshots/oem_login.png)
-- Database dashboard – **SPACE FOR SCREENSHOT**
-- Schema and tables visible – **SPACE FOR SCREENSHOT**
-- Users and roles – **SPACE FOR SCREENSHOT**
-- Performance metrics (optional) – **SPACE FOR SCREENSHOT**
 
 ---
 
