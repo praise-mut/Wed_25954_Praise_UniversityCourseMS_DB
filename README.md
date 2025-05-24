@@ -276,9 +276,16 @@ INSERT INTO Schedules (Schedule_ID, Course_ID, Room_Number, Time_Slot, Day) VALU
 - Executed SELECT queries to verify insertions
 
 ### 📸 Screenshots
-- Table creation confirmation – **SPACE FOR SCREENSHOT**
-- Sample data inserted – **SPACE FOR SCREENSHOT**
-- Query results and validation – **SPACE FOR SCREENSHOT**
+
+![Table Diagram](./Screenshots/T1.png)
+
+![Table Diagram](./Screenshots/T2.png)
+
+![Table Diagram](./Screenshots/T3.png)
+
+![Table Diagram](./Screenshots/T4.png)
+
+![Table Diagram](./Screenshots/T5.png)
 
 ---
 
