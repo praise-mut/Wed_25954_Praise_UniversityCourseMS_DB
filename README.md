@@ -312,6 +312,32 @@ INSERT INTO Schedules (Schedule_ID, Course_ID, Room_Number, Time_Slot, Day) VALU
 Implemented DDL and DML operations for managing students, courses, enrollments, schedules, and professors.
 
 - **DML**: `INSERT`, `UPDATE`, `DELETE` for Students, Courses, Enrollments
+#### ➤ UPDATE
+```sql
+UPDATE Students
+SET Phone = '987-654-3210'
+WHERE Student_ID = 2;
+
+```
+```sql
+UPDATE Professors
+SET Department = 'Computer Engineering'
+WHERE Professor_ID = 102;
+
+```
+
+#### ➤ DELETE
+```sql
+DELETE FROM Schedules
+WHERE Schedule_ID = 203;
+```
+
+```sql
+DELETE FROM Enrollments
+WHERE Enrollment_ID = 5;
+
+```
+
 - **DDL**: Created PL/SQL procedures, functions, cursors, and packages
 
 ### 🧩 Procedures & Functions
