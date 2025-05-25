@@ -172,9 +172,12 @@ Each department's data is managed separately in a Departments table to eliminate
 ![DBA Diagram](./Screenshots/dba.png)
 
 ### 🖥️ OEM Access
-- OEM accessed at `https://localhost:5500/`
+- OEM accessed at `https://localhost:5502/em`
 - SSL bypass used to open OEM successfully
 
+### ➤ OEM DASHBOARD
+
+![OEM Diagram](./Screenshots/oem.png)
 ---
 
 ## ✅ Phase V – Table Implementation and Data Insertion
